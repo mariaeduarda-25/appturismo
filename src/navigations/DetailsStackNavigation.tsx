@@ -1,0 +1,30 @@
+import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import PublicacoesScreen from "../screens/Publicacoes";
+import DetailsScreen from "../screens/Details";
+
+interface Publicacao {
+  id: string;
+  nome: string;
+  data: string;
+  titulo: string;
+  localizacao: string;
+  imagem: string;
+  descricao?: string;
+}
+
+type RootStackParamList = {
+  Publicacoes: undefined;
+  Details: { publicacao: Publicacao };
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+export default function DetailsStackNavigation() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Publicacoes" component={PublicacoesScreen} />
+      <Stack.Screen name="Details" component={DetailsScreen} />
+    </Stack.Navigator>
+  );
+}
