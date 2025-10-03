@@ -8,8 +8,8 @@ export class Travel {
     readonly title: string,
     readonly description: string,
     readonly date: Date,
-    readonly location: GeoCoordinates,
-    readonly user: User, 
+    readonly user: Partial<User>, 
+    readonly location?: GeoCoordinates,
     readonly photo?: Photo
   ) {}
 
@@ -18,10 +18,10 @@ export class Travel {
     title: string,
     description: string,
     date: Date,
-    location: GeoCoordinates,
-    user: User,
+    user: Partial<User>,
+    location?: GeoCoordinates,
     photo?: Photo
   ): Travel {
-    return new Travel(id, title, description, date, location, user, photo);
+    return new Travel(id, title, description, date, user,location, photo);
   }
 }

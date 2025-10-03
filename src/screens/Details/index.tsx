@@ -3,6 +3,7 @@ import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import styles from "./styles";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
+import { RootStackParamList } from "../../navigations/DetailsStackNavigation";
 
 // Tipos locais
 interface Publicacao {
@@ -15,10 +16,6 @@ interface Publicacao {
   descricao?: string;
 }
 
-type RootStackParamList = {
-  Publicacoes: undefined;
-  Details: { publicacao: Publicacao };
-};
 
 type DetailsRouteProp = RouteProp<RootStackParamList, "Details">;
 
@@ -42,8 +39,8 @@ export default function DetailsScreen() {
         <View style={styles.card}>
           <View style={styles.headerCard}>
             <View style={styles.textInfo}>
-              <Text style={styles.nome}>{publicacao.nome}</Text>
-              <Text style={styles.data}>{publicacao.data}</Text>
+              <Text style={styles.nome}>{publicacao.user.name?.value}</Text>
+              <Text style={styles.data}>{publicacao.date.toDateString()}</Text>
             </View>
 
             <View style={styles.icons}>
@@ -57,13 +54,12 @@ export default function DetailsScreen() {
             </View>
           </View>
 
-          <Text style={styles.titulo}>{publicacao.titulo}</Text>
-          <Text style={styles.localizacao}>{publicacao.localizacao}</Text>
+          <Text style={styles.titulo}>{publicacao.title}</Text>
 
-          <Image source={{ uri: publicacao.imagem }} style={styles.imagem} />
+          <Image source={{ uri: publicacao.photo?.url }} style={styles.imagem} />
 
           <View style={styles.descricaoBox}>
-            <Text style={styles.descricao}>{publicacao.descricao}</Text>
+            <Text style={styles.descricao}>{publicacao.description}</Text>
           </View>
         </View>
       </ScrollView>

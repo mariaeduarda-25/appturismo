@@ -12,6 +12,18 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 import { ButtonInterface } from "../../components/ButtonInterface";
+import { makeTravelUseCases } from '../../core/factories/makeTraveUsecases';
+import { VinylRecordTypes } from '../navigations/VinylRecordStackNavigation';
+
+export function FormsScreen({ navigation }: TravelTypes) {
+  const [name, setName] = useState('');
+  const [date, setDate] = useState('');
+  const [numberOfTracks, setNumberOfTracks] = useState('');
+  const [photoUrl, setPhotoUrl] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const vinylRecordUseCases = makeVinylRecordUseCases();
+
 
 export default function FormularioScreen() {
   return (

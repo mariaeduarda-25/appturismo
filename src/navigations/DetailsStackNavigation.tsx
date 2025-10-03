@@ -2,6 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import PublicacoesScreen from "../screens/Publicacoes";
 import DetailsScreen from "../screens/Details";
+import { Travel } from "../core/domain/entities/Travel";
 
 interface Publicacao {
   id: string;
@@ -13,9 +14,9 @@ interface Publicacao {
   descricao?: string;
 }
 
-type RootStackParamList = {
+export type RootStackParamList = {
   Publicacoes: undefined;
-  Details: { publicacao: Publicacao };
+  Details: { publicacao: Travel };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

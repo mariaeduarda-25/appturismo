@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -13,6 +13,10 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {ButtonInterface} from "../../components/ButtonInterface";
 import { useAuth } from "../../context/auth";
+import { FindAllTravel } from "../../core/domain/use-cases/FindAllTravel";
+import { makeTravelUseCases } from "../../core/factories/makeTraveUsecases";
+import { Travel } from "../../core/domain/entities/Travel";
+import { RootStackParamList } from "../../navigations/DetailsStackNavigation";
 
 
 interface Publicacao {
@@ -24,10 +28,6 @@ interface Publicacao {
   imagem: string;
   descricao?: string;
 }
-type RootStackParamList = {
-  Publicacoes: undefined;
-  Details: { publicacao: Publicacao };
-};
 
 type PublicacoesNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -36,36 +36,27 @@ type PublicacoesNavigationProp = NativeStackNavigationProp<
 
 export default function PublicacoesScreen() {
   const { setLogin } = useAuth();
+  const [records, setRecords] = useState<Travel[] | null>(null);
   const [busca, setBusca] = useState("");
   const navigation = useNavigation<PublicacoesNavigationProp>();
+  const [dicas] = useState<Publicacao[]>([]);
+  const findAllTravel = makeTravelUseCases();
 
-  const [dicas] = useState<Publicacao[]>([
-    {
-      id: "1",
-      nome: "Rebecca",
-      data: "06/01/25",
-      titulo: "Viagem para Campos do Jordão",
-      localizacao: "São Paulo, Brasil",
-      imagem:
-        "https://www.melhoresdestinos.com.br/wp-content/uploads/2022/11/teleferico-campos-jordao-capa.jpg",
-      descricao:
-        "A viagem para Campos do Jordão foi uma experiência incrível! Indico o Hotel A e o restaurante B.",
-    },
-    {
-      id: "2",
-      nome: "Maria Eduarda",
-      data: "07/01/25",
-      titulo: "Viagem para Gramado",
-      localizacao: "Rio Grande do Sul, Brasil",
-      imagem:
-        "https://blog.123milhas.com/wp-content/uploads/2022/12/aniversario-de-gramado-quatro-curiosidades-sobre-a-cidade-conexao123.jpg",
-      descricao:
-        "Gramado é encantador! Não deixe de visitar a Rua Coberta e o Lago Negro.",
-    },
-  ]);
+  async function fetchRecords() {
+    try {
+      const allRecords = await findAllTravel.findAllTravel.execute();
+      setRecords(allRecords);
+    } catch (err) {
+      console.log("Failed to fetch records");
+    } 
+  }
 
-  const dicasFiltradas = dicas.filter((d) =>
-    d.titulo.toLowerCase().includes(busca.toLowerCase())
+  useEffect(() => {
+    fetchRecords()
+  }, []);
+
+  const dicasFiltradas = records?.filter((d) =>
+    d.title.toLowerCase().includes(busca.toLowerCase())
   );
 
   return (
@@ -88,11 +79,10 @@ export default function PublicacoesScreen() {
             style={styles.card}
             onPress={() => navigation.navigate("Details", { publicacao: item })}
           >
-            <Text style={styles.nome}>{item.nome}</Text>
-            <Text style={styles.data}>{item.data}</Text>
-            <Text style={styles.titulo}>{item.titulo}</Text>
-            <Text style={styles.localizacao}>{item.localizacao}</Text>
-            <Image source={{ uri: item.imagem }} style={styles.imagem} />
+            <Text style={styles.nome}>{item.user.name?.value}</Text>
+            <Text style={styles.data}>{item.date.toDateString()}</Text>
+            <Text style={styles.titulo}>{item.title}</Text>
+            <Image source={{ uri: item.photo?.url }} style={styles.imagem} />
           </TouchableOpacity>
         )}
       />
