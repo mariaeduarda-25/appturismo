@@ -6,18 +6,18 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  Settings,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import {ButtonInterface} from "../../components/ButtonInterface";
+import { ButtonInterface } from "../../components/ButtonInterface";
 import { useAuth } from "../../context/auth";
 import { FindAllTravel } from "../../core/domain/use-cases/FindAllTravel";
 import { makeTravelUseCases } from "../../core/factories/makeTraveUsecases";
 import { Travel } from "../../core/domain/entities/Travel";
-import { RootStackParamList } from "../../navigations/DetailsStackNavigation";
-
+import { RootStackParamList, TravelTypes } from "../../navigations/DetailsStackNavigation";
 
 interface Publicacao {
   id: string;
@@ -34,30 +34,30 @@ type PublicacoesNavigationProp = NativeStackNavigationProp<
   "Publicacoes"
 >;
 
-export default function PublicacoesScreen() {
+export default function PublicacoesScreen({ navigation }: TravelTypes) {
   const { setLogin } = useAuth();
   const [records, setRecords] = useState<Travel[] | null>(null);
   const [busca, setBusca] = useState("");
-  const navigation = useNavigation<PublicacoesNavigationProp>();
-  const [dicas] = useState<Publicacao[]>([]);
+  const [dicasFiltradas, setDicasFiltradas] = useState<Travel[] | null>([]);
   const findAllTravel = makeTravelUseCases();
 
-  async function fetchRecords() {
+  useEffect(() => {
+    navigation.addListener("focus",  async function fetchRecords() {
     try {
       const allRecords = await findAllTravel.findAllTravel.execute();
       setRecords(allRecords);
+      console.log(allRecords);
+      setDicasFiltradas(allRecords);
     } catch (err) {
       console.log("Failed to fetch records");
-    } 
-  }
-
-  useEffect(() => {
-    fetchRecords()
+    }
+  });
   }, []);
 
-  const dicasFiltradas = records?.filter((d) =>
-    d.title.toLowerCase().includes(busca.toLowerCase())
-  );
+  const dicasFiltradasFunc = (b: string) => {
+    setBusca(b);
+    records?.filter((d) => d.title.toLowerCase().includes(busca.toLowerCase()));
+  };
 
   return (
     <View style={styles.container}>
@@ -68,7 +68,7 @@ export default function PublicacoesScreen() {
           style={styles.input}
           placeholder="Pesquisar Publicações"
           value={busca}
-          onChangeText={setBusca}
+          onChangeText={dicasFiltradasFunc}
         />
       </View>
       <FlatList
@@ -86,7 +86,11 @@ export default function PublicacoesScreen() {
           </TouchableOpacity>
         )}
       />
-       <ButtonInterface title='Sair' type='primary' onPress={()=> setLogin(false)} />
+      <ButtonInterface
+        title="Sair"
+        type="primary"
+        onPress={() => setLogin(false)}
+      />
     </View>
   );
 }

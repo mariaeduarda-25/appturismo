@@ -26,8 +26,8 @@ export class RegisterTravel {
       title,
       description,
       date,
-      location,
       user,
+      location,
       photo
     );
 

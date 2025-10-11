@@ -1,126 +1,125 @@
 import React, { useState } from "react";
 import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
   View,
   Text,
   TextInput,
-  TouchableOpacity,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { makeTravelUseCases } from "../../core/factories/makeTraveUsecases";
 import styles from "./styles";
-import { ButtonInterface } from "../../components/ButtonInterface";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import { MeuTypes } from "../../navigations/MeuTabNavigation";
 
+export function FormsScreen({ navigation }: MeuTypes) {
+  const [userName, setUserName] = useState("");
+  const [date, setDate] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [photoUrl, setPhotoUrl] = useState("");
 
-export default function FormularioScreen() {
-  const [nome, setNome] = useState("");
-  const [data, setData] = useState<Date | null>(null);
-  const [titulo, setTitulo] = useState("");
-  const [descricao, setDescricao] = useState("");
-  const [showPicker, setShowPicker] = useState(false);
+  const travelUseCases = makeTravelUseCases();
 
-  function handleSave() {
-    if (!nome || !data || !titulo || !descricao) {
-      Alert.alert("Erro", "Preencha todos os campos!");
-      return;
-    }
-    // aqui você salvaria os dados
-    Alert.alert("Sucesso", "Salvo com sucesso!");
-  }
+  async function handleRegister() {
+    try {
+      await travelUseCases.registerTravel.execute({
+        user: {
+          id: "1",
+          name: { value: userName || "Usuário Anônimo" },
+          email: { value: "teste@email.com" },
+          password: { value: "123456" },
+          location: { latitude: 0, longitude: 0 },
+        },
+        title,
+        description,
+        photoUrl,
+        date: new Date(),
+        latitude: 0,
+        longitude: 0
+      });
+      console.log(await travelUseCases.findAllTravel.execute())
 
-  function onChangeDate(event: any, selectedDate?: Date) {
-    // No Android o onChange é chamado também quando o usuário fecha o diálogo
-    if (Platform.OS === "android") {
-      setShowPicker(false);
-    }
-    if (selectedDate) {
-      setData(selectedDate);
+      Alert.alert("Sucesso", "Viagem registrada com sucesso!");
+      navigation.navigate("PublicacaoTab");
+    } catch (err) {
+      Alert.alert("Erro", "Falha ao registrar viagem");
     }
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.headerBar}>
-        <Text style={styles.header}>DICAS DE VIAGENS</Text>
-      </View>
-
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         style={{ flex: 1 }}
       >
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-        >
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          {/* Título principal */}
+          <View style={styles.headerBar}>
+            <Text style={styles.header}>DICAS DE VIAGENS</Text>
+          </View>
+
+          {/* Caixa azul principal */}
           <View style={styles.blueBox}>
+            {/* Caixa lilás de instruções */}
             <View style={styles.lilasBox}>
               <Text style={styles.subHeader}>
-                Registre suas viagens com fotos, localizações e dicas que valem a
-                lembrança!
+                Registre suas viagens com fotos, localizações e dicas que valem a lembrança!
               </Text>
             </View>
 
+            {/* Campos */}
             <TextInput
+              placeholder="Nome"
               style={styles.input}
-              placeholder="Nome usuário:"
-              value={nome}
-              onChangeText={setNome}
+              value={userName}
+              onChangeText={setUserName}
             />
 
-            {/* Campo de data: Touchable abre o calendário, input apenas mostra data */}
-            <TouchableOpacity onPress={() => setShowPicker(true)}>
-              <TextInput
-                style={styles.input}
-                placeholder="Data:"
-                value={data ? data.toLocaleDateString("pt-BR") : ""}
-                editable={false} // importante: torna não editável e evita cursor
-                pointerEvents="none"
-              />
-            </TouchableOpacity>
-
-            {showPicker && (
-              <DateTimePicker
-                value={data || new Date()}
-                mode="date"
-                display={Platform.OS === "ios" ? "spinner" : "calendar"}
-                onChange={onChangeDate}
-              />
-            )}
-
             <TextInput
+              placeholder="Data (DD/MM/AAAA)"
               style={styles.input}
-              placeholder="Título:"
-              value={titulo}
-              onChangeText={setTitulo}
+              value={date}
+              onChangeText={setDate}
             />
+
             <TextInput
+              placeholder="Título"
+              style={styles.input}
+              value={title}
+              onChangeText={setTitle}
+            />
+
+            <TextInput
+              placeholder="Descrição"
               style={[styles.input, styles.textArea]}
-              placeholder="Descrição da viagem:"
               multiline
-              value={descricao}
-              onChangeText={setDescricao}
+              value={description}
+              onChangeText={setDescription}
             />
 
+            {/* Localização */}
             <TouchableOpacity style={styles.locationButton}>
               <Ionicons
                 name="location-outline"
-                size={20}
+                size={18}
                 style={styles.locationIcon}
               />
-              <Text style={styles.locationText}>
-                Adicionar localização atual
-              </Text>
+              <Text style={styles.locationText}>Adicionar localização atual</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.uploadBox}>
+            {/* Upload */}
+            <View style={styles.uploadBox}>
               <Text style={styles.uploadText}>Upload imagem</Text>
-            </TouchableOpacity>
+            </View>
 
-            <ButtonInterface title="Salvar" type="primary" onPress={handleSave} />
+            {/* Botão salvar */}
+            <TouchableOpacity style={styles.saveButton} onPress={handleRegister}>
+              <Text style={styles.saveButtonText}>Salvar</Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

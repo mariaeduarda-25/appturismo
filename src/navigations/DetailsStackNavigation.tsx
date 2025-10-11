@@ -1,5 +1,5 @@
 import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack";
 import PublicacoesScreen from "../screens/Publicacoes";
 import DetailsScreen from "../screens/Details";
 import { Travel } from "../core/domain/entities/Travel";
@@ -17,6 +17,11 @@ interface Publicacao {
 export type RootStackParamList = {
   Publicacoes: undefined;
   Details: { publicacao: Travel };
+};
+
+type TravelScreenProp = NativeStackNavigationProp<RootStackParamList, 'Publicacoes'>
+export type TravelTypes = {
+  navigation: TravelScreenProp;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
