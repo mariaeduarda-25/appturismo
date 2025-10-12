@@ -8,7 +8,7 @@ import { MockTravelRepository } from '../infra/repositories/MockTravelRepository
 import { FindAllTravel } from '../domain/use-cases/FindAllTravel';
 
 export function makeTravelUseCases() {
-  const travelRepository: ITravelRepository = new MockTravelRepository();
+  const travelRepository: ITravelRepository = MockTravelRepository.getInstance();
 
   const registerTravel= new RegisterTravel(travelRepository);
   const updateTravel= new UpdateTravel(travelRepository);

@@ -61,10 +61,7 @@ export function FormsScreen({ navigation }: MeuTypes) {
           <View style={styles.headerBar}>
             <Text style={styles.header}>DICAS DE VIAGENS</Text>
           </View>
-
-          {/* Caixa azul principal */}
           <View style={styles.blueBox}>
-            {/* Caixa lilás de instruções */}
             <View style={styles.lilasBox}>
               <Text style={styles.subHeader}>
                 Registre suas viagens com fotos, localizações e dicas que valem a lembrança!

@@ -17,7 +17,7 @@ export class Travel {
     id: string,
     title: string,
     description: string,
-    date: Date,
+    date: Date ,
     user: Partial<User>,
     location?: GeoCoordinates,
     photo?: Photo

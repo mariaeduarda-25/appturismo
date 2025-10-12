@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -6,62 +6,67 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
-  Settings,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { ButtonInterface } from "../../components/ButtonInterface";
 import { useAuth } from "../../context/auth";
-import { FindAllTravel } from "../../core/domain/use-cases/FindAllTravel";
 import { makeTravelUseCases } from "../../core/factories/makeTraveUsecases";
 import { Travel } from "../../core/domain/entities/Travel";
-import { RootStackParamList, TravelTypes } from "../../navigations/DetailsStackNavigation";
-
-interface Publicacao {
-  id: string;
-  nome: string;
-  data: string;
-  titulo: string;
-  localizacao: string;
-  imagem: string;
-  descricao?: string;
-}
-
-type PublicacoesNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "Publicacoes"
->;
+import { TravelTypes } from "../../navigations/DetailsStackNavigation";
 
 export default function PublicacoesScreen({ navigation }: TravelTypes) {
   const { setLogin } = useAuth();
-  const [records, setRecords] = useState<Travel[] | null>(null);
+  const [records, setRecords] = useState<Travel[]>([]);
   const [busca, setBusca] = useState("");
-  const [dicasFiltradas, setDicasFiltradas] = useState<Travel[] | null>([]);
-  const findAllTravel = makeTravelUseCases();
+  const [dicasFiltradas, setDicasFiltradas] = useState<Travel[]>([]);
+  const travelUsecases = makeTravelUseCases();
 
-  useEffect(() => {
-    navigation.addListener("focus",  async function fetchRecords() {
-    try {
-      const allRecords = await findAllTravel.findAllTravel.execute();
-      setRecords(allRecords);
-      console.log(allRecords);
-      setDicasFiltradas(allRecords);
-    } catch (err) {
-      console.log("Failed to fetch records");
+  // 🔁 Recarrega automaticamente quando a tela volta ao foco
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchRecords() {
+        try {
+          const allRecords = await travelUsecases.findAllTravel.execute();
+
+          // 🔧 Garante que todos os registros tenham 'date' como Date
+          const normalized = (allRecords ?? []).map((item) => ({
+            ...item,
+            date:
+              item.date instanceof Date ? item.date : new Date(item.date),
+          }));
+
+          setRecords(normalized);
+          setDicasFiltradas(normalized);
+        } catch (err) {
+          console.log("Erro ao buscar viagens:", err);
+        }
+      }
+
+      fetchRecords();
+    }, [])
+  );
+
+  // 🔍 Filtra conforme a busca
+  const dicasFiltradasFunc = (texto: string) => {
+    setBusca(texto);
+
+    if (texto.trim() === "") {
+      setDicasFiltradas(records);
+    } else {
+      const filtradas = records.filter((d) =>
+        d.title.toLowerCase().includes(texto.toLowerCase())
+      );
+      setDicasFiltradas(filtradas);
     }
-  });
-  }, []);
-
-  const dicasFiltradasFunc = (b: string) => {
-    setBusca(b);
-    records?.filter((d) => d.title.toLowerCase().includes(busca.toLowerCase()));
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>DICAS DE VIAGENS</Text>
+
+      {/* Barra de pesquisa */}
       <View style={styles.searchContainer}>
         <Ionicons name="search" size={20} style={styles.searchIcon} />
         <TextInput
@@ -71,21 +76,46 @@ export default function PublicacoesScreen({ navigation }: TravelTypes) {
           onChangeText={dicasFiltradasFunc}
         />
       </View>
+
+      {/* Lista de publicações */}
       <FlatList
         data={dicasFiltradas}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.card}
-            onPress={() => navigation.navigate("Details", { publicacao: item })}
+            onPress={() =>
+              navigation.navigate("Details", {
+                publicacao: {
+                  id: item.id,
+                  title: item.title,
+                  description: item.description,
+                  // 👇 Garante que o tipo continue Date
+                  date:
+                    item.date instanceof Date
+                      ? item.date
+                      : new Date(item.date),
+                  user: item.user,
+                  photo: item.photo,
+                },
+              })
+            }
           >
             <Text style={styles.nome}>{item.user.name?.value}</Text>
-            <Text style={styles.data}>{item.date.toDateString()}</Text>
+            <Text style={styles.data}>
+              {item.date instanceof Date
+                ? item.date.toLocaleDateString("pt-BR")
+                : new Date(item.date).toLocaleDateString("pt-BR")}
+            </Text>
             <Text style={styles.titulo}>{item.title}</Text>
-            <Image source={{ uri: item.photo?.url }} style={styles.imagem} />
+            {item.photo?.url ? (
+              <Image source={{ uri: item.photo.url }} style={styles.imagem} />
+            ) : null}
           </TouchableOpacity>
         )}
       />
+
+      {/* Botão de sair */}
       <ButtonInterface
         title="Sair"
         type="primary"
