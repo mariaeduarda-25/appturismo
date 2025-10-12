@@ -9,7 +9,7 @@ import {
   TextInput,
   ActivityIndicator,
 } from "react-native";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import styles from "./styles";
 import { RootStackParamList } from "../../navigations/DetailsStackNavigation";
@@ -19,10 +19,10 @@ type DetailsRouteProp = RouteProp<RootStackParamList, "Details">;
 
 export default function DetailsScreen() {
   const route = useRoute<DetailsRouteProp>();
+  const navigation = useNavigation(); 
   const { publicacao } = route.params;
   const travelUsecases = makeTravelUseCases();
 
-  // 🔧 Conversão segura da data (evita Invalid Date e objetos não serializáveis)
   const safeDate = (() => {
     try {
       if (!publicacao?.date) return "";
@@ -48,7 +48,6 @@ export default function DetailsScreen() {
   const [description, setDescription] = useState(publicacao.description || "");
   const [photoUrl, setPhotoUrl] = useState(publicacao.photo?.url || "");
 
-  // ✏️ Editar publicação
   const handleEdit = async () => {
     if (!isEditing) {
       setIsEditing(true);
@@ -73,7 +72,6 @@ export default function DetailsScreen() {
     }
   };
 
-  // 🗑️ Excluir publicação
   const handleDelete = async () => {
     Alert.alert("Excluir publicação", "Tem certeza que deseja excluir?", [
       { text: "Cancelar", style: "cancel" },
@@ -85,6 +83,9 @@ export default function DetailsScreen() {
             setLoading(true);
             await travelUsecases.deleteTravel.execute({ id: publicacao.id });
             Alert.alert("Sucesso", "Publicação excluída com sucesso!");
+
+            // ✅ Volta automaticamente para a tela de Publicações
+            navigation.goBack();
           } catch (error) {
             console.error(error);
             Alert.alert("Erro", "Não foi possível excluir a publicação.");

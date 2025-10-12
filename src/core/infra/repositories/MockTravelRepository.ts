@@ -4,21 +4,7 @@ import { Photo } from "../../domain/value-objects/Photo";
 
 export class MockTravelRepository implements ITravelRepository {
   private static instance: MockTravelRepository;
-  private travels: Travel[] = [{
-        user: {
-          id: "1",
-          name: { value: "Maria" },
-          email: { value: "teste@email.com" },
-          password: { value: "123456" },
-          location: { latitude: 0, longitude: 0 },
-        },
-        title: "Viagem para  a praia",
-        description: "A viagem foi para a cidade de Angra dos Reis e durou 5 dias",
-        photo: Photo.create("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOFb7FNWfwg-fEPAei7UvY78ayXWO_bVhSsA&s"),
-        date: new Date("06/10/2025"),
-        id: "1",
-        location: {latitude: 0, longitude: 0}
-      }];
+  private travels: Travel[] = [];
 
   private constructor() {}
 

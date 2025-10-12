@@ -23,14 +23,12 @@ export default function PublicacoesScreen({ navigation }: TravelTypes) {
   const [dicasFiltradas, setDicasFiltradas] = useState<Travel[]>([]);
   const travelUsecases = makeTravelUseCases();
 
-  // 🔁 Recarrega automaticamente quando a tela volta ao foco
   useFocusEffect(
     useCallback(() => {
       async function fetchRecords() {
         try {
           const allRecords = await travelUsecases.findAllTravel.execute();
 
-          // 🔧 Garante que todos os registros tenham 'date' como Date
           const normalized = (allRecords ?? []).map((item) => ({
             ...item,
             date:
@@ -48,7 +46,6 @@ export default function PublicacoesScreen({ navigation }: TravelTypes) {
     }, [])
   );
 
-  // 🔍 Filtra conforme a busca
   const dicasFiltradasFunc = (texto: string) => {
     setBusca(texto);
 
@@ -90,7 +87,6 @@ export default function PublicacoesScreen({ navigation }: TravelTypes) {
                   id: item.id,
                   title: item.title,
                   description: item.description,
-                  // 👇 Garante que o tipo continue Date
                   date:
                     item.date instanceof Date
                       ? item.date

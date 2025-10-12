@@ -14,7 +14,7 @@ export class LoginUser {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
-      throw new Error('Invalid credentials');
+      throw new Error('Credenciais inválidas');
     }
 
     const isPasswordValid = await this.comparePassword(
@@ -23,7 +23,7 @@ export class LoginUser {
     );
 
     if (!isPasswordValid) {
-      throw new Error('Invalid credentials');
+      throw new Error('Credenciais inválidas');
     }
 
     return user;

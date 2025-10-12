@@ -10,7 +10,7 @@ import { Photo } from '../../../domain/value-objects/Photo';
 
 describe('FindTravel', () => {
   it('deve encontrar uma viagem pelo id', async () => {
-    const travelRepository = new MockTravelRepository();
+    const travelRepository = MockTravelRepository.getInstance();
     const findTravel = new FindTravel(travelRepository);
 
     const user = User.create(
@@ -28,9 +28,9 @@ describe('FindTravel', () => {
       'travel-1',
       'Viagem para São Paulo',                       
       'Conhecendo os principais pontos turísticos', 
-      new Date('2025-10-01'),                       
-      location,                                     
-      user,                                         
+      new Date('2025-10-01'),                                                         
+      user,
+      location,                                        
       photo                                         
     );
 
@@ -42,7 +42,7 @@ describe('FindTravel', () => {
   });
 
   it('deve retornar null se a viagem não for encontrada', async () => {
-    const travelRepository = new MockTravelRepository();
+    const travelRepository = MockTravelRepository.getInstance();
     const findTravel = new FindTravel(travelRepository);
 
     const foundTravel = await findTravel.execute({ id: 'nao-existe' });

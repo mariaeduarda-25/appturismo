@@ -11,13 +11,15 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { makeTravelUseCases } from "../../core/factories/makeTraveUsecases";
 import styles from "./styles";
 import { MeuTypes } from "../../navigations/MeuTabNavigation";
 
 export function FormsScreen({ navigation }: MeuTypes) {
   const [userName, setUserName] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState<Date | null>(null);
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
@@ -25,6 +27,11 @@ export function FormsScreen({ navigation }: MeuTypes) {
   const travelUseCases = makeTravelUseCases();
 
   async function handleRegister() {
+    if (!title || !description || !date) {
+      Alert.alert("Atenção", "Preencha todos os campos obrigatórios!");
+      return;
+    }
+
     try {
       await travelUseCases.registerTravel.execute({
         user: {
@@ -37,11 +44,10 @@ export function FormsScreen({ navigation }: MeuTypes) {
         title,
         description,
         photoUrl,
-        date: new Date(),
+        date,
         latitude: 0,
-        longitude: 0
+        longitude: 0,
       });
-      console.log(await travelUseCases.findAllTravel.execute())
 
       Alert.alert("Sucesso", "Viagem registrada com sucesso!");
       navigation.navigate("PublicacaoTab");
@@ -57,18 +63,19 @@ export function FormsScreen({ navigation }: MeuTypes) {
         style={{ flex: 1 }}
       >
         <ScrollView contentContainerStyle={styles.scrollContent}>
-          {/* Título principal */}
           <View style={styles.headerBar}>
             <Text style={styles.header}>DICAS DE VIAGENS</Text>
           </View>
+
           <View style={styles.blueBox}>
             <View style={styles.lilasBox}>
               <Text style={styles.subHeader}>
-                Registre suas viagens com fotos, localizações e dicas que valem a lembrança!
+                Registre suas viagens com fotos, localizações e dicas que valem
+                a lembrança!
               </Text>
             </View>
 
-            {/* Campos */}
+            {/* Campo Nome */}
             <TextInput
               placeholder="Nome"
               style={styles.input}
@@ -76,13 +83,29 @@ export function FormsScreen({ navigation }: MeuTypes) {
               onChangeText={setUserName}
             />
 
-            <TextInput
-              placeholder="Data (DD/MM/AAAA)"
-              style={styles.input}
-              value={date}
-              onChangeText={setDate}
-            />
+            {/* Campo Data com placeholder */}
+            <TouchableOpacity
+              style={[styles.input, { justifyContent: "center" }]}
+              onPress={() => setShowDatePicker(true)}
+            >
+              <Text style={{ color: date ? "#000" : "#888" }}>
+                {date ? date.toLocaleDateString("pt-BR") : "Data da viagem"}
+              </Text>
+            </TouchableOpacity>
 
+            {showDatePicker && (
+              <DateTimePicker
+                value={date || new Date()}
+                mode="date"
+                display="calendar"
+                onChange={(event, selectedDate) => {
+                  setShowDatePicker(false);
+                  if (selectedDate) setDate(selectedDate);
+                }}
+              />
+            )}
+
+            {/* Campo Título */}
             <TextInput
               placeholder="Título"
               style={styles.input}
@@ -90,6 +113,7 @@ export function FormsScreen({ navigation }: MeuTypes) {
               onChangeText={setTitle}
             />
 
+            {/* Campo Descrição */}
             <TextInput
               placeholder="Descrição"
               style={[styles.input, styles.textArea]}
@@ -98,22 +122,24 @@ export function FormsScreen({ navigation }: MeuTypes) {
               onChangeText={setDescription}
             />
 
-            {/* Localização */}
+            {/* Botão Localização */}
             <TouchableOpacity style={styles.locationButton}>
               <Ionicons
                 name="location-outline"
                 size={18}
                 style={styles.locationIcon}
               />
-              <Text style={styles.locationText}>Adicionar localização atual</Text>
+              <Text style={styles.locationText}>
+                Adicionar localização atual
+              </Text>
             </TouchableOpacity>
 
-            {/* Upload */}
+            {/* Upload de imagem */}
             <View style={styles.uploadBox}>
               <Text style={styles.uploadText}>Upload imagem</Text>
             </View>
 
-            {/* Botão salvar */}
+            {/* Botão Salvar */}
             <TouchableOpacity style={styles.saveButton} onPress={handleRegister}>
               <Text style={styles.saveButtonText}>Salvar</Text>
             </TouchableOpacity>
