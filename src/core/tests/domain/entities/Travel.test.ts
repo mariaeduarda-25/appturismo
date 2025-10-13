@@ -19,14 +19,13 @@ describe('Travel', () => {
     const location = GeoCoordinates.create(-22.9068, -43.1729);
     const photo = Photo.create('https://example.com/travel.jpg');
 
-    // Ordem ajustada conforme o Travel atual (user vem antes, depois location)
     const travel = Travel.create(
       't1',
       'Viagem para São Paulo',
       'Conhecendo os principais pontos turísticos',
       new Date('2025-09-20'),
-      user,       // user primeiro
-      location,   // location depois
+      user,       
+      location,   
       photo
     );
 
@@ -35,12 +34,11 @@ describe('Travel', () => {
     expect(travel.description).toBe('Conhecendo os principais pontos turísticos');
     expect(travel.date).toEqual(new Date('2025-09-20'));
 
-    // Verifica location
     expect(travel.location).toBeDefined();
     expect(travel.location!.latitude).toBe(-22.9068);
     expect(travel.location!.longitude).toBe(-43.1729);
 
-    // Verifica user (usando ! para indicar ao TS que não é undefined)
+ 
     expect(travel.user!.name!.value).toBe('Maria Eduarda');
     expect(travel.user!.email!.value).toBe('maria@example.com');
 

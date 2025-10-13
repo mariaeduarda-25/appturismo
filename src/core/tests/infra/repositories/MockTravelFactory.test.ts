@@ -10,7 +10,7 @@ import { Photo } from "../../../domain/value-objects/Photo";
 
 describe("MockTravelRepository", () => {
   it("não deve lançar erro ao atualizar uma viagem inexistente", async () => {
-    const travelRepository = new MockTravelRepository();
+    const travelRepository = MockTravelRepository.getInstance();
 
     const user = User.create(
       "1",
@@ -25,8 +25,8 @@ describe("MockTravelRepository", () => {
       "Viagem Fantasma",
       "Essa viagem não existe no repositório",
       new Date("2025-01-01"),
-      GeoCoordinates.create(-22.7383, -45.5927),
       user,
+      GeoCoordinates.create(-22.7383, -45.5927),
       Photo.create("https://example.com/foto.jpg")
     );
 

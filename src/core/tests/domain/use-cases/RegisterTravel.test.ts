@@ -8,7 +8,7 @@ import { GeoCoordinates } from "../../../domain/value-objects/GeoCoordinates";
 
 describe("RegisterTravel", () => {
   it("deve registar uma nova viagem", async () => {
-    const travelRepository = new MockTravelRepository();
+    const travelRepository = MockTravelRepository.getInstance();
     const registerTravel = new RegisterTravel(travelRepository);
 
     const user = User.create(
@@ -33,8 +33,8 @@ describe("RegisterTravel", () => {
     expect(travel.title).toBe("Viagem para Campos do Jordão");
     expect(travel.description).toBe("Fim de semana nas montanhas");
     expect(travel.user).toBe(user);
-    expect(travel.location.latitude).toBe(-22.7383);
-    expect(travel.location.longitude).toBe(-45.5927);
+    expect(travel.location!.latitude).toBe(-22.7383);
+    expect(travel.location!.longitude).toBe(-45.5927);
     expect(travel.photo?.url).toBe("https://example.com/foto.jpg");
 
     const foundTravel = await travelRepository.findById(travel.id);

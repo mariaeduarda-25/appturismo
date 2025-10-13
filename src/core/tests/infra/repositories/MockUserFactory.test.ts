@@ -7,7 +7,7 @@ import { GeoCoordinates } from '../../../domain/value-objects/GeoCoordinates';
 
 describe('MockUserRepository', () => {
   it('should return null when finding a non-existent user by email', async () => {
-    const userRepository = new MockUserRepository();
+    const userRepository = MockUserRepository.getInstance();
 
     const user = await userRepository.findByEmail('ghost@example.com');
 
@@ -15,7 +15,7 @@ describe('MockUserRepository', () => {
   });
 
   it('should save and find a user by id', async () => {
-    const userRepository = new MockUserRepository();
+    const userRepository = MockUserRepository.getInstance();
     const user = User.create(
       '1',
       Name.create('John Doe'),

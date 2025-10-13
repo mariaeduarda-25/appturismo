@@ -38,8 +38,8 @@ export class UpdateTravel {
       newTitle,
       newDescription,
       newDate,
-      newLocation,
       newUser,
+      newLocation,
       newPhoto
     );
 

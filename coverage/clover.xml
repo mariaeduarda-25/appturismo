@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1760376104165" clover="3.2.0">
-  <project timestamp="1760376104165" name="All files">
+<coverage generated="1760377016051" clover="3.2.0">
+  <project timestamp="1760377016051" name="All files">
     <metrics statements="176" coveredstatements="161" conditionals="81" coveredconditionals="66" methods="76" coveredmethods="71" elements="333" coveredelements="298" complexity="0" loc="176" ncloc="176" packages="11" files="30" classes="30"/>
     <package name="components.ButtonInterface">
       <metrics statements="2" coveredstatements="2" conditionals="4" coveredconditionals="3" methods="1" coveredmethods="1"/>
@@ -191,10 +191,10 @@
       <metrics statements="21" coveredstatements="20" conditionals="12" coveredconditionals="12" methods="21" coveredmethods="19"/>
       <file name="MockTravelRepository.ts" path="/var/www/app/appturismo/src/core/infra/repositories/MockTravelRepository.ts">
         <metrics statements="13" coveredstatements="12" conditionals="6" coveredconditionals="6" methods="13" coveredmethods="11"/>
-        <line num="7" count="9" type="stmt"/>
-        <line num="12" count="13" type="cond" truecount="2" falsecount="0"/>
-        <line num="13" count="5" type="stmt"/>
-        <line num="15" count="13" type="stmt"/>
+        <line num="7" count="8" type="stmt"/>
+        <line num="12" count="17" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="8" type="stmt"/>
+        <line num="15" count="17" type="stmt"/>
         <line num="19" count="7" type="stmt"/>
         <line num="23" count="9" type="cond" truecount="2" falsecount="0"/>
         <line num="27" count="2" type="stmt"/>
@@ -207,10 +207,10 @@
       </file>
       <file name="MockUserRepository.ts" path="/var/www/app/appturismo/src/core/infra/repositories/MockUserRepository.ts">
         <metrics statements="8" coveredstatements="8" conditionals="6" coveredconditionals="6" methods="8" coveredmethods="8"/>
-        <line num="6" count="7" type="stmt"/>
-        <line num="11" count="25" type="cond" truecount="2" falsecount="0"/>
-        <line num="12" count="5" type="stmt"/>
-        <line num="14" count="25" type="stmt"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="11" count="27" type="cond" truecount="2" falsecount="0"/>
+        <line num="12" count="6" type="stmt"/>
+        <line num="14" count="27" type="stmt"/>
         <line num="18" count="7" type="stmt"/>
         <line num="22" count="14" type="cond" truecount="2" falsecount="0"/>
         <line num="26" count="3" type="cond" truecount="2" falsecount="0"/>
