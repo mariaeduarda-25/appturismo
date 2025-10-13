@@ -13,7 +13,7 @@ export interface IProvider {
   children: ReactNode;
 }
 
-const AuthContext = createContext<IAuthContextData>({} as IAuthContextData);
+export const AuthContext = createContext<IAuthContextData>({} as IAuthContextData);
 
 export const AuthProvider = ({ children }: IProvider) => {
   const [login, setLogin] = useState(false);

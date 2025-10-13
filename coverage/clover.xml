@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1760309210094" clover="3.2.0">
-  <project timestamp="1760309210094" name="All files">
-    <metrics statements="157" coveredstatements="149" conditionals="62" coveredconditionals="55" methods="72" coveredmethods="68" elements="291" coveredelements="272" complexity="0" loc="157" ncloc="157" packages="10" files="28" classes="28"/>
+<coverage generated="1760376104165" clover="3.2.0">
+  <project timestamp="1760376104165" name="All files">
+    <metrics statements="176" coveredstatements="161" conditionals="81" coveredconditionals="66" methods="76" coveredmethods="71" elements="333" coveredelements="298" complexity="0" loc="176" ncloc="176" packages="11" files="30" classes="30"/>
     <package name="components.ButtonInterface">
       <metrics statements="2" coveredstatements="2" conditionals="4" coveredconditionals="3" methods="1" coveredmethods="1"/>
-      <file name="index.tsx" path="C:\Users\maria\coreturismo2025\appturismo\src\components\ButtonInterface\index.tsx">
+      <file name="index.tsx" path="/var/www/app/appturismo/src/components/ButtonInterface/index.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="4" coveredconditionals="3" methods="1" coveredmethods="1"/>
         <line num="8" count="22" type="stmt"/>
       </file>
-      <file name="styles.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\components\ButtonInterface\styles.ts">
+      <file name="styles.ts" path="/var/www/app/appturismo/src/components/ButtonInterface/styles.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="4" count="1" type="stmt"/>
       </file>
     </package>
     <package name="context">
       <metrics statements="17" coveredstatements="14" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
-      <file name="auth.tsx" path="C:\Users\maria\coreturismo2025\appturismo\src\context\auth.tsx">
+      <file name="auth.tsx" path="/var/www/app/appturismo/src/context/auth.tsx">
         <metrics statements="17" coveredstatements="14" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="18" count="1" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
         <line num="19" count="2" type="stmt"/>
         <line num="20" count="2" type="stmt"/>
         <line num="21" count="2" type="stmt"/>
@@ -38,18 +38,18 @@
     </package>
     <package name="core.domain.entities">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
-      <file name="Travel.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\domain\entities\Travel.ts">
+      <file name="Travel.ts" path="/var/www/app/appturismo/src/core/domain/entities/Travel.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="25" count="11" type="stmt"/>
       </file>
-      <file name="User.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\domain\entities\User.ts">
+      <file name="User.ts" path="/var/www/app/appturismo/src/core/domain/entities/User.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="22" count="16" type="stmt"/>
+        <line num="22" count="17" type="stmt"/>
       </file>
     </package>
     <package name="core.domain.use-cases">
       <metrics statements="46" coveredstatements="46" conditionals="24" coveredconditionals="22" methods="20" coveredmethods="20"/>
-      <file name="DeleteTravel.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\domain\use-cases\DeleteTravel.ts">
+      <file name="DeleteTravel.ts" path="/var/www/app/appturismo/src/core/domain/use-cases/DeleteTravel.ts">
         <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
         <line num="7" count="2" type="stmt"/>
         <line num="9" count="2" type="stmt"/>
@@ -57,19 +57,19 @@
         <line num="12" count="1" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
       </file>
-      <file name="FindAllTravel.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\domain\use-cases\FindAllTravel.ts">
+      <file name="FindAllTravel.ts" path="/var/www/app/appturismo/src/core/domain/use-cases/FindAllTravel.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="8" count="2" type="stmt"/>
       </file>
-      <file name="FindTravel.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\domain\use-cases\FindTravel.ts">
+      <file name="FindTravel.ts" path="/var/www/app/appturismo/src/core/domain/use-cases/FindTravel.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="8" count="2" type="stmt"/>
       </file>
-      <file name="FindUser.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\domain\use-cases\FindUser.ts">
+      <file name="FindUser.ts" path="/var/www/app/appturismo/src/core/domain/use-cases/FindUser.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="8" count="2" type="stmt"/>
       </file>
-      <file name="LoginUser.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\domain\use-cases\LoginUser.ts">
+      <file name="LoginUser.ts" path="/var/www/app/appturismo/src/core/domain/use-cases/LoginUser.ts">
         <metrics statements="9" coveredstatements="9" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
         <line num="12" count="4" type="stmt"/>
         <line num="14" count="4" type="stmt"/>
@@ -81,11 +81,11 @@
         <line num="29" count="2" type="stmt"/>
         <line num="36" count="3" type="stmt"/>
       </file>
-      <file name="LogoutUser.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\domain\use-cases\LogoutUser.ts">
+      <file name="LogoutUser.ts" path="/var/www/app/appturismo/src/core/domain/use-cases/LogoutUser.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="7" count="1" type="stmt"/>
       </file>
-      <file name="RegisterTravel.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\domain\use-cases\RegisterTravel.ts">
+      <file name="RegisterTravel.ts" path="/var/www/app/appturismo/src/core/domain/use-cases/RegisterTravel.ts">
         <metrics statements="6" coveredstatements="6" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
         <line num="19" count="5" type="stmt"/>
         <line num="21" count="5" type="stmt"/>
@@ -94,7 +94,7 @@
         <line num="34" count="5" type="stmt"/>
         <line num="36" count="5" type="stmt"/>
       </file>
-      <file name="RegisterUser.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\domain\use-cases\RegisterUser.ts">
+      <file name="RegisterUser.ts" path="/var/www/app/appturismo/src/core/domain/use-cases/RegisterUser.ts">
         <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
         <line num="18" count="7" type="stmt"/>
         <line num="20" count="7" type="stmt"/>
@@ -106,7 +106,7 @@
         <line num="38" count="6" type="stmt"/>
         <line num="42" count="6" type="stmt"/>
       </file>
-      <file name="UpdateTravel.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\domain\use-cases\UpdateTravel.ts">
+      <file name="UpdateTravel.ts" path="/var/www/app/appturismo/src/core/domain/use-cases/UpdateTravel.ts">
         <metrics statements="13" coveredstatements="13" conditionals="14" coveredconditionals="13" methods="2" coveredmethods="2"/>
         <line num="19" count="3" type="stmt"/>
         <line num="21" count="3" type="stmt"/>
@@ -125,36 +125,36 @@
     </package>
     <package name="core.domain.value-objects">
       <metrics statements="24" coveredstatements="24" conditionals="14" coveredconditionals="14" methods="15" coveredmethods="15"/>
-      <file name="Email.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\domain\value-objects\Email.ts">
+      <file name="Email.ts" path="/var/www/app/appturismo/src/core/domain/value-objects/Email.ts">
         <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
-        <line num="5" count="18" type="cond" truecount="2" falsecount="0"/>
+        <line num="5" count="19" type="cond" truecount="2" falsecount="0"/>
         <line num="6" count="1" type="stmt"/>
-        <line num="8" count="17" type="stmt"/>
-        <line num="12" count="18" type="stmt"/>
-        <line num="13" count="18" type="stmt"/>
+        <line num="8" count="18" type="stmt"/>
+        <line num="12" count="19" type="stmt"/>
+        <line num="13" count="19" type="stmt"/>
       </file>
-      <file name="GeoCoordinates.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\domain\value-objects\GeoCoordinates.ts">
+      <file name="GeoCoordinates.ts" path="/var/www/app/appturismo/src/core/domain/value-objects/GeoCoordinates.ts">
         <metrics statements="4" coveredstatements="4" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3"/>
-        <line num="5" count="29" type="cond" truecount="2" falsecount="0"/>
+        <line num="5" count="30" type="cond" truecount="2" falsecount="0"/>
         <line num="6" count="3" type="stmt"/>
-        <line num="8" count="26" type="stmt"/>
-        <line num="12" count="29" type="cond" truecount="4" falsecount="0"/>
+        <line num="8" count="27" type="stmt"/>
+        <line num="12" count="30" type="cond" truecount="4" falsecount="0"/>
       </file>
-      <file name="Name.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\domain\value-objects\Name.ts">
+      <file name="Name.ts" path="/var/www/app/appturismo/src/core/domain/value-objects/Name.ts">
         <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
-        <line num="5" count="18" type="cond" truecount="2" falsecount="0"/>
+        <line num="5" count="19" type="cond" truecount="2" falsecount="0"/>
         <line num="6" count="1" type="stmt"/>
-        <line num="8" count="17" type="stmt"/>
-        <line num="12" count="18" type="stmt"/>
+        <line num="8" count="18" type="stmt"/>
+        <line num="12" count="19" type="stmt"/>
       </file>
-      <file name="Password.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\domain\value-objects\Password.ts">
+      <file name="Password.ts" path="/var/www/app/appturismo/src/core/domain/value-objects/Password.ts">
         <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
-        <line num="5" count="18" type="cond" truecount="2" falsecount="0"/>
+        <line num="5" count="19" type="cond" truecount="2" falsecount="0"/>
         <line num="6" count="1" type="stmt"/>
-        <line num="8" count="17" type="stmt"/>
-        <line num="12" count="18" type="stmt"/>
+        <line num="8" count="18" type="stmt"/>
+        <line num="12" count="19" type="stmt"/>
       </file>
-      <file name="Photo.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\domain\value-objects\Photo.ts">
+      <file name="Photo.ts" path="/var/www/app/appturismo/src/core/domain/value-objects/Photo.ts">
         <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
         <line num="5" count="13" type="cond" truecount="2" falsecount="0"/>
         <line num="6" count="2" type="stmt"/>
@@ -167,17 +167,17 @@
     </package>
     <package name="core.factories">
       <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-      <file name="makeTraveUsecases.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\factories\makeTraveUsecases.ts">
+      <file name="makeTraveUsecases.ts" path="/var/www/app/appturismo/src/core/factories/makeTraveUsecases.ts">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="11" count="1" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="14" count="1" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
+        <line num="11" count="5" type="stmt"/>
+        <line num="13" count="5" type="stmt"/>
+        <line num="14" count="5" type="stmt"/>
+        <line num="15" count="5" type="stmt"/>
+        <line num="16" count="5" type="stmt"/>
+        <line num="17" count="5" type="stmt"/>
+        <line num="19" count="5" type="stmt"/>
       </file>
-      <file name="makeUserUsecases.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\factories\makeUserUsecases.ts">
+      <file name="makeUserUsecases.ts" path="/var/www/app/appturismo/src/core/factories/makeUserUsecases.ts">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="10" count="9" type="stmt"/>
         <line num="12" count="9" type="stmt"/>
@@ -189,12 +189,12 @@
     </package>
     <package name="core.infra.repositories">
       <metrics statements="21" coveredstatements="20" conditionals="12" coveredconditionals="12" methods="21" coveredmethods="19"/>
-      <file name="MockTravelRepository.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\infra\repositories\MockTravelRepository.ts">
+      <file name="MockTravelRepository.ts" path="/var/www/app/appturismo/src/core/infra/repositories/MockTravelRepository.ts">
         <metrics statements="13" coveredstatements="12" conditionals="6" coveredconditionals="6" methods="13" coveredmethods="11"/>
-        <line num="7" count="8" type="stmt"/>
-        <line num="12" count="8" type="cond" truecount="2" falsecount="0"/>
-        <line num="13" count="4" type="stmt"/>
-        <line num="15" count="8" type="stmt"/>
+        <line num="7" count="9" type="stmt"/>
+        <line num="12" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="5" type="stmt"/>
+        <line num="15" count="13" type="stmt"/>
         <line num="19" count="7" type="stmt"/>
         <line num="23" count="9" type="cond" truecount="2" falsecount="0"/>
         <line num="27" count="2" type="stmt"/>
@@ -203,9 +203,9 @@
         <line num="36" count="3" type="cond" truecount="2" falsecount="0"/>
         <line num="37" count="2" type="stmt"/>
         <line num="42" count="1" type="stmt"/>
-        <line num="46" count="2" type="stmt"/>
+        <line num="46" count="3" type="stmt"/>
       </file>
-      <file name="MockUserRepository.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\core\infra\repositories\MockUserRepository.ts">
+      <file name="MockUserRepository.ts" path="/var/www/app/appturismo/src/core/infra/repositories/MockUserRepository.ts">
         <metrics statements="8" coveredstatements="8" conditionals="6" coveredconditionals="6" methods="8" coveredmethods="8"/>
         <line num="6" count="7" type="stmt"/>
         <line num="11" count="25" type="cond" truecount="2" falsecount="0"/>
@@ -217,9 +217,37 @@
         <line num="30" count="8" type="stmt"/>
       </file>
     </package>
+    <package name="screens.Forms">
+      <metrics statements="19" coveredstatements="12" conditionals="19" coveredconditionals="11" methods="4" coveredmethods="3"/>
+      <file name="index.tsx" path="/var/www/app/appturismo/src/screens/Forms/index.tsx">
+        <metrics statements="19" coveredstatements="12" conditionals="19" coveredconditionals="11" methods="4" coveredmethods="3"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="22" count="4" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="24" count="4" type="stmt"/>
+        <line num="25" count="4" type="stmt"/>
+        <line num="27" count="4" type="stmt"/>
+        <line num="30" count="1" type="cond" truecount="4" falsecount="1"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
+        <line num="59" count="4" type="stmt"/>
+        <line num="89" count="1" type="stmt"/>
+        <line num="102" count="0" type="stmt"/>
+        <line num="103" count="0" type="cond" truecount="0" falsecount="2"/>
+      </file>
+      <file name="styles.ts" path="/var/www/app/appturismo/src/screens/Forms/styles.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
     <package name="screens.Login">
       <metrics statements="14" coveredstatements="12" conditionals="4" coveredconditionals="2" methods="3" coveredmethods="2"/>
-      <file name="index.tsx" path="C:\Users\maria\coreturismo2025\appturismo\src\screens\Login\index.tsx">
+      <file name="index.tsx" path="/var/www/app/appturismo/src/screens/Login/index.tsx">
         <metrics statements="13" coveredstatements="11" conditionals="4" coveredconditionals="2" methods="3" coveredmethods="2"/>
         <line num="12" count="5" type="stmt"/>
         <line num="13" count="5" type="stmt"/>
@@ -235,14 +263,14 @@
         <line num="30" count="5" type="stmt"/>
         <line num="61" count="0" type="stmt"/>
       </file>
-      <file name="styles.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\screens\Login\styles.ts">
+      <file name="styles.ts" path="/var/www/app/appturismo/src/screens/Login/styles.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="3" count="1" type="stmt"/>
       </file>
     </package>
     <package name="screens.Register">
       <metrics statements="17" coveredstatements="15" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="2"/>
-      <file name="index.tsx" path="C:\Users\maria\coreturismo2025\appturismo\src\screens\Register\index.tsx">
+      <file name="index.tsx" path="/var/www/app/appturismo/src/screens/Register/index.tsx">
         <metrics statements="16" coveredstatements="14" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="2"/>
         <line num="12" count="6" type="stmt"/>
         <line num="13" count="6" type="stmt"/>
@@ -261,16 +289,16 @@
         <line num="39" count="6" type="stmt"/>
         <line num="78" count="0" type="stmt"/>
       </file>
-      <file name="styles.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\screens\Register\styles.ts">
+      <file name="styles.ts" path="/var/www/app/appturismo/src/screens/Register/styles.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="3" count="1" type="stmt"/>
       </file>
     </package>
     <package name="styles">
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="colors.ts" path="C:\Users\maria\coreturismo2025\appturismo\src\styles\colors.ts">
+      <file name="colors.ts" path="/var/www/app/appturismo/src/styles/colors.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
+        <line num="1" count="2" type="stmt"/>
       </file>
     </package>
   </project>
