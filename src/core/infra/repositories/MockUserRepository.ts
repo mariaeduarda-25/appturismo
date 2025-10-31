@@ -1,5 +1,6 @@
 import { IUserRepository } from '../../domain/repositories/IUserRepository';
 import { User } from '../../domain/entities/User';
+import { Password } from '../../domain/value-objects/Password';
 
 export class MockUserRepository implements IUserRepository {
   private static instance: MockUserRepository;
@@ -12,6 +13,31 @@ export class MockUserRepository implements IUserRepository {
       MockUserRepository.instance = new MockUserRepository();
     }
     return MockUserRepository.instance;
+  }
+
+  async register(user: User): Promise<User> {
+    const hashedPassword = `hashed_${user.password.value}`;
+    const newUser = User.create(
+      Math.random().toString(),
+      user.name,
+      user.email,
+      Password.create(hashedPassword),
+      user.location
+    );
+    this.users.push(newUser);
+    return newUser;
+  }
+
+  async authenticate(email: string, password: string): Promise<User> {
+    const user = await this.findByEmail(email);
+    if (!user) {
+      throw new Error('Invalid credentials');
+    }
+    const isPasswordValid = `hashed_${password}` === user.password.value;
+    if (!isPasswordValid) {
+      throw new Error('Invalid credentials');
+    }
+    return user;
   }
 
   async save(user: User): Promise<void> {

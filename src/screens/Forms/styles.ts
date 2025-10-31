@@ -74,6 +74,7 @@ export default StyleSheet.create({
     color: colors.third,
   },
 
+  
   /* upload */
   uploadBox: {
     height: 120,

@@ -8,6 +8,7 @@ import {
   Platform,
   ScrollView,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -15,6 +16,10 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { makeTravelUseCases } from "../../core/factories/makeTraveUsecases";
 import styles from "./styles";
 import { MeuTypes } from "../../navigations/MeuTabNavigation";
+import { supabase } from '../../core/infra/supabase/client/supabaseClient';
+import * as ImagePicker from 'expo-image-picker';
+import { ButtonInterface } from "../../components/ButtonInterface";
+import { styles as baseStyles } from '../Register/styles'; // Import base styles
 
 export function FormsScreen({ navigation }: MeuTypes) {
   const [userName, setUserName] = useState("");
@@ -23,9 +28,40 @@ export function FormsScreen({ navigation }: MeuTypes) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
+  const [imageAsset, setImageAsset] = useState<ImagePicker.ImagePickerAsset | null>(null); // Stores the selected image asset
 
   const travelUseCases = makeTravelUseCases();
 
+  async function pickImage() {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.7,
+    });
+
+    if (!result.canceled) {
+      setImageAsset(result.assets[0]);
+    }
+  }
+
+  async function takePhoto() {
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+    if (permissionResult.granted === false) {
+      Alert.alert("You've refused to allow this app to access your camera!");
+      return;
+    }
+
+    let result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.7,
+    });
+
+    if (!result.canceled) {
+      setImageAsset(result.assets[0]);
+    }
+  }
   async function handleRegister() {
     if (!title || !description || !date) {
       Alert.alert("Atenção", "Preencha todos os campos obrigatórios!");
@@ -134,10 +170,11 @@ export function FormsScreen({ navigation }: MeuTypes) {
               </Text>
             </TouchableOpacity>
 
-            {/* Upload de imagem */}
-            <View style={styles.uploadBox}>
-              <Text style={styles.uploadText}>Upload imagem</Text>
-            </View>
+        {imageAsset && <Image source={{ uri: imageAsset.uri }} style={styles.uploadBox} />}
+        <View style={styles.uploadBox}>
+            <ButtonInterface title='Take Photo' type='third' onPress={takePhoto} />
+            <ButtonInterface title='Pick Image' type='third' onPress={pickImage} />
+        </View>
 
             {/* Botão Salvar */}
             <TouchableOpacity style={styles.saveButton} onPress={handleRegister}>

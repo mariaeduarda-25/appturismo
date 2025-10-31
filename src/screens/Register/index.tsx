@@ -30,7 +30,8 @@ export function RegisterScreen({ navigation }: LoginTypes) {
       Alert.alert('Successo', 'Usuário registrado com sucesso!');
       navigation.navigate('Login');
     } catch (err) {
-      setError('Falha ao registrar usuário');
+      console.log(err)
+      Alert.alert('Falha ao registrar usuário');
     } finally {
       setLoading(false);
     }
