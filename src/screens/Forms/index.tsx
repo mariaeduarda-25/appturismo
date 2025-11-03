@@ -16,7 +16,6 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { makeTravelUseCases } from "../../core/factories/makeTraveUsecases";
 import styles from "./styles";
 import { MeuTypes } from "../../navigations/MeuTabNavigation";
-import { supabase } from '../../core/infra/supabase/client/supabaseClient';
 import * as ImagePicker from 'expo-image-picker';
 import { ButtonInterface } from "../../components/ButtonInterface";
 import { styles as baseStyles } from '../Register/styles'; // Import base styles
@@ -27,8 +26,9 @@ export function FormsScreen({ navigation }: MeuTypes) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [photoUrl, setPhotoUrl] = useState("");
-  const [imageAsset, setImageAsset] = useState<ImagePicker.ImagePickerAsset | null>(null); // Stores the selected image asset
+  const [imageAsset, setImageAsset] = useState<ImagePicker.ImagePickerAsset | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const travelUseCases = makeTravelUseCases();
 
@@ -48,7 +48,7 @@ export function FormsScreen({ navigation }: MeuTypes) {
   async function takePhoto() {
     const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
     if (permissionResult.granted === false) {
-      Alert.alert("You've refused to allow this app to access your camera!");
+      Alert.alert("Você recusou o acesso à câmera!");
       return;
     }
 
@@ -62,13 +62,29 @@ export function FormsScreen({ navigation }: MeuTypes) {
       setImageAsset(result.assets[0]);
     }
   }
+
   async function handleRegister() {
     if (!title || !description || !date) {
       Alert.alert("Atenção", "Preencha todos os campos obrigatórios!");
       return;
     }
 
+    if (!imageAsset) {
+      Alert.alert("Atenção", "Selecione ou tire uma foto antes de salvar!");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
     try {
+      // Faz upload da imagem antes de registrar
+      const uploadedPhotoUrl = await travelUseCases.uploadFile.execute({
+        imageAsset,
+        bucket: 'upload',
+        userId: "1", // substitua por user.id quando tiver autenticação
+      });
+
       await travelUseCases.registerTravel.execute({
         user: {
           id: "1",
@@ -79,7 +95,7 @@ export function FormsScreen({ navigation }: MeuTypes) {
         },
         title,
         description,
-        photoUrl,
+        photoUrl: uploadedPhotoUrl, // URL retornada pelo upload
         date,
         latitude: 0,
         longitude: 0,
@@ -88,7 +104,11 @@ export function FormsScreen({ navigation }: MeuTypes) {
       Alert.alert("Sucesso", "Viagem registrada com sucesso!");
       navigation.navigate("PublicacaoTab");
     } catch (err) {
+      console.error(err);
+      setError("Falha ao registrar viagem");
       Alert.alert("Erro", "Falha ao registrar viagem");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -111,7 +131,6 @@ export function FormsScreen({ navigation }: MeuTypes) {
               </Text>
             </View>
 
-            {/* Campo Nome */}
             <TextInput
               placeholder="Nome"
               style={styles.input}
@@ -119,7 +138,6 @@ export function FormsScreen({ navigation }: MeuTypes) {
               onChangeText={setUserName}
             />
 
-            {/* Campo Data com placeholder */}
             <TouchableOpacity
               style={[styles.input, { justifyContent: "center" }]}
               onPress={() => setShowDatePicker(true)}
@@ -141,7 +159,6 @@ export function FormsScreen({ navigation }: MeuTypes) {
               />
             )}
 
-            {/* Campo Título */}
             <TextInput
               placeholder="Título"
               style={styles.input}
@@ -149,7 +166,6 @@ export function FormsScreen({ navigation }: MeuTypes) {
               onChangeText={setTitle}
             />
 
-            {/* Campo Descrição */}
             <TextInput
               placeholder="Descrição"
               style={[styles.input, styles.textArea]}
@@ -158,7 +174,6 @@ export function FormsScreen({ navigation }: MeuTypes) {
               onChangeText={setDescription}
             />
 
-            {/* Botão Localização */}
             <TouchableOpacity style={styles.locationButton}>
               <Ionicons
                 name="location-outline"
@@ -170,16 +185,30 @@ export function FormsScreen({ navigation }: MeuTypes) {
               </Text>
             </TouchableOpacity>
 
-        {imageAsset && <Image source={{ uri: imageAsset.uri }} style={styles.uploadBox} />}
-        <View style={styles.uploadBox}>
-            <ButtonInterface title='Take Photo' type='third' onPress={takePhoto} />
-            <ButtonInterface title='Pick Image' type='third' onPress={pickImage} />
-        </View>
+            {imageAsset && (
+              <Image source={{ uri: imageAsset.uri }} style={styles.uploadBox} />
+            )}
 
-            {/* Botão Salvar */}
-            <TouchableOpacity style={styles.saveButton} onPress={handleRegister}>
-              <Text style={styles.saveButtonText}>Salvar</Text>
+            <View style={styles.uploadBox}>
+              <ButtonInterface title="Tirar Foto" type="third" onPress={takePhoto} />
+              <ButtonInterface title="Escolher Foto" type="third" onPress={pickImage} />
+            </View>
+
+            <TouchableOpacity
+              style={styles.saveButton}
+              onPress={handleRegister}
+              disabled={loading}
+            >
+              <Text style={styles.saveButtonText}>
+                {loading ? "Salvando..." : "Salvar"}
+              </Text>
             </TouchableOpacity>
+
+            {error && (
+              <Text style={{ color: "red", textAlign: "center", marginTop: 10 }}>
+                {error}
+              </Text>
+            )}
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
