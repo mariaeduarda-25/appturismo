@@ -12,17 +12,8 @@ export class LoginUser {
     const { email, password } = params;
 
     const user = await this.userRepository.findByEmail(email);
-
+    console.log(user)
     if (!user) {
-      throw new Error('Credenciais inválidas');
-    }
-
-    const isPasswordValid = await this.comparePassword(
-      password,
-      user.password.value
-    );
-
-    if (!isPasswordValid) {
       throw new Error('Credenciais inválidas');
     }
 

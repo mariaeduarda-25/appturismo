@@ -6,9 +6,16 @@ import { RegisterTravel } from '../domain/use-cases/RegisterTravel';
 import { UpdateTravel } from '../domain/use-cases/UpdateTravel';
 import { MockTravelRepository } from '../infra/repositories/MockTravelRepository';
 import { FindAllTravel } from '../domain/use-cases/FindAllTravel';
+import { SupabaseTravelRepository } from '../infra/repositories/supabaseTravelRepository';
+
+import {UploadFileUseCase} from "../domain/use-cases/UploadFile"
+import {DeleteFileUseCase} from "../domain/use-cases/DeleteFile"
+import {SupabaseStorageService} from "../infra/supabase/storage/storageService"
 
 export function makeTravelUseCases() {
-  const travelRepository: ITravelRepository = MockTravelRepository.getInstance();
+  const travelRepository: ITravelRepository = process.env.EXPO_PUBLIC_USE_API
+    ? SupabaseTravelRepository.getInstance()
+    : MockTravelRepository.getInstance();
 
   const registerTravel= new RegisterTravel(travelRepository);
   const updateTravel= new UpdateTravel(travelRepository);
@@ -16,11 +23,19 @@ export function makeTravelUseCases() {
   const findTravel= new FindTravel(travelRepository);
   const findAllTravel = new FindAllTravel(travelRepository)
 
+  const supabaseStorageRepository = new SupabaseStorageService
+  const uploadFile = new UploadFileUseCase(supabaseStorageRepository)
+  const deleteFile = new DeleteFileUseCase(supabaseStorageRepository)
+
   return {
     registerTravel,
     updateTravel,
     deleteTravel,
     findTravel,
-    findAllTravel
+    findAllTravel,
+
+
+    uploadFile,
+    deleteFile
   };
 }
