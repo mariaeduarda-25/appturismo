@@ -59,10 +59,9 @@ export default function PublicacoesScreen({ navigation }: TravelTypes) {
     }
   };
 
-  // 🔹 Função auxiliar para corrigir o fuso horário
   const formatDate = (dateInput: Date | string) => {
     const date = new Date(dateInput);
-    // remove a conversão automática de UTC → local
+  
     const localDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
     return localDate.toLocaleDateString("pt-BR");
   };
