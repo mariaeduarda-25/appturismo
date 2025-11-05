@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import { ButtonInterface } from "../../components/ButtonInterface";
 import { useAuth } from "../../context/auth";
 import { makeTravelUseCases } from "../../core/factories/makeTraveUsecases";
@@ -59,6 +59,14 @@ export default function PublicacoesScreen({ navigation }: TravelTypes) {
     }
   };
 
+  // 🔹 Função auxiliar para corrigir o fuso horário
+  const formatDate = (dateInput: Date | string) => {
+    const date = new Date(dateInput);
+    // remove a conversão automática de UTC → local
+    const localDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+    return localDate.toLocaleDateString("pt-BR");
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>DICAS DE VIAGENS</Text>
@@ -98,11 +106,7 @@ export default function PublicacoesScreen({ navigation }: TravelTypes) {
             }
           >
             <Text style={styles.nome}>{item.user.name?.value}</Text>
-            <Text style={styles.data}>
-              {item.date instanceof Date
-                ? item.date.toLocaleDateString("pt-BR")
-                : new Date(item.date).toLocaleDateString("pt-BR")}
-            </Text>
+            <Text style={styles.data}>{formatDate(item.date)}</Text>
             <Text style={styles.titulo}>{item.title}</Text>
             {item.photo?.url ? (
               <Image source={{ uri: item.photo.url }} style={styles.imagem} />
