@@ -11,8 +11,8 @@ import {
   Image,
 } from "react-native";
 
-import MapView, { Marker } from "react-native-maps"; // MAPA
-import * as Location from "expo-location"; // LOCALIZAÇÃO
+import MapView, { Marker } from "react-native-maps";
+import * as Location from "expo-location";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -34,12 +34,12 @@ export function FormsScreen({ navigation }: MeuTypes) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // 🌍 LOCALIZAÇÃO
+
   const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
 
   const travelUseCases = makeTravelUseCases();
 
-  // 🔥 CARREGAR LOCALIZAÇÃO AO ABRIR
+
   useEffect(() => {
     async function loadLocation() {
       const { status } = await Location.requestForegroundPermissionsAsync();
@@ -58,7 +58,6 @@ export function FormsScreen({ navigation }: MeuTypes) {
     loadLocation();
   }, []);
 
-  // 📸 Seleção de imagem
   async function pickImage() {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"],
@@ -86,7 +85,7 @@ export function FormsScreen({ navigation }: MeuTypes) {
     if (!result.canceled) setImageAsset(result.assets[0]);
   }
 
-  // 💾 Registrar
+
   async function handleRegister() {
     if (!title || !description || !date) {
       Alert.alert("Atenção", "Preencha todos os campos obrigatórios!");
@@ -102,14 +101,12 @@ export function FormsScreen({ navigation }: MeuTypes) {
     setError(null);
 
     try {
-      // Upload foto
       const uploadedPhotoUrl = await travelUseCases.uploadFile.execute({
         imageAsset,
         bucket: 'upload',
         userId: "1",
       });
 
-      // Registrar viagem
       await travelUseCases.registerTravel.execute({
         user: {
           id: "1",
@@ -145,10 +142,17 @@ export function FormsScreen({ navigation }: MeuTypes) {
         style={{ flex: 1 }}
       >
         <ScrollView contentContainerStyle={styles.scrollContent}>
-          
+         <View style={styles.headerBar} >
           <Text style={styles.header}>DICAS DE VIAGENS</Text>
+        </View>
 
-          {/* FORM NORMAL */}
+        <View style={styles.blueBox}>
+          <View style={styles.lilasBox}>
+            <Text style={styles.subHeader}>
+              Registre suas viagens com fotos,localizações e dicas que valem a lembrança!
+            </Text>
+          </View>
+
           <TextInput
             placeholder="Nome"
             style={styles.input}
@@ -156,7 +160,6 @@ export function FormsScreen({ navigation }: MeuTypes) {
             onChangeText={setUserName}
           />
 
-          {/* DATA */}
           <TouchableOpacity
             style={[styles.input, { justifyContent: "center" }]}
             onPress={() => setShowDatePicker(true)}
@@ -193,7 +196,6 @@ export function FormsScreen({ navigation }: MeuTypes) {
             onChangeText={setDescription}
           />
 
-          {/* 🗺️ MAPA */}
           <Text style={{ marginTop: 10, fontWeight: "bold" }}>
             Selecione a localização no mapa:
           </Text>
@@ -229,7 +231,6 @@ export function FormsScreen({ navigation }: MeuTypes) {
             </MapView>
           )}
 
-          {/* FOTO */}
           {imageAsset && (
             <Image source={{ uri: imageAsset.uri }} style={styles.uploadBox} />
           )}
@@ -239,7 +240,7 @@ export function FormsScreen({ navigation }: MeuTypes) {
             <ButtonInterface title="Escolher Foto" type="third" onPress={pickImage} />
           </View>
 
-          {/* SALVAR */}
+
           <TouchableOpacity
             style={styles.saveButton}
             onPress={handleRegister}
@@ -255,7 +256,7 @@ export function FormsScreen({ navigation }: MeuTypes) {
               {error}
             </Text>
           )}
-
+        </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

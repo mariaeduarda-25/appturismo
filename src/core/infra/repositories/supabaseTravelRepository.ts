@@ -102,6 +102,7 @@ export class SupabaseTravelRepository implements ITravelRepository {
             id: item.user?.id ?? "sem-id",
             name: { value: item.user?.name ?? "Usuário desconhecido" },
             email: item.user?.email ?? "",
+
           },
           item.user?.latitude && item.user?.longitude
             ? GeoCoordinates.create(item.user.latitude, item.user.longitude)

@@ -15,6 +15,7 @@ import { useAuth } from "../../context/auth";
 import { makeTravelUseCases } from "../../core/factories/makeTraveUsecases";
 import { Travel } from "../../core/domain/entities/Travel";
 import { TravelTypes } from "../../navigations/DetailsStackNavigation";
+import * as Location from 'expo-location';
 
 export default function PublicacoesScreen({ navigation }: TravelTypes) {
   const { setLogin } = useAuth();
@@ -29,12 +30,23 @@ export default function PublicacoesScreen({ navigation }: TravelTypes) {
         try {
           const allRecords = await travelUsecases.findAllTravel.execute();
 
-          const normalized = (allRecords ?? []).map((item) => ({
-            ...item,
-            date:
-              item.date instanceof Date ? item.date : new Date(item.date),
-          }));
-
+          const normalized =  (allRecords ?? []).map( (item) => {
+            
+            if (item.location){
+            //   const address =  await Location.reverseGeocodeAsync(item.location)
+            // console.log(address.formattedAddress)
+              return ({
+                ...item,
+                date:
+                  item.date instanceof Date ? item.date : new Date(item.date),
+              })}
+            else
+              return ({
+                ...item,
+                date:
+                  item.date instanceof Date ? item.date : new Date(item.date),
+              });
+          })
           setRecords(normalized);
           setDicasFiltradas(normalized);
         } catch (err) {
@@ -61,7 +73,7 @@ export default function PublicacoesScreen({ navigation }: TravelTypes) {
 
   const formatDate = (dateInput: Date | string) => {
     const date = new Date(dateInput);
-  
+
     const localDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
     return localDate.toLocaleDateString("pt-BR");
   };
@@ -100,6 +112,7 @@ export default function PublicacoesScreen({ navigation }: TravelTypes) {
                       : new Date(item.date),
                   user: item.user,
                   photo: item.photo,
+                  location: item.user.location
                 },
               })
             }
@@ -110,6 +123,9 @@ export default function PublicacoesScreen({ navigation }: TravelTypes) {
             {item.photo?.url ? (
               <Image source={{ uri: item.photo.url }} style={styles.imagem} />
             ) : null}
+            <Text>
+              {item.location ? JSON.stringify(item.location) : "n"}
+            </Text>
           </TouchableOpacity>
         )}
       />
