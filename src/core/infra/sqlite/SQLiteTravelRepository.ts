@@ -10,7 +10,7 @@ import { v4 as uuid } from 'uuid';
 export class SQLiteTravelRepository implements ITravelRepository {
   private static instance: SQLiteTravelRepository;
 
-  private constructor() {}
+  private constructor() { }
 
   public static getInstance(): SQLiteTravelRepository {
     if (!SQLiteTravelRepository.instance) {
@@ -22,7 +22,7 @@ export class SQLiteTravelRepository implements ITravelRepository {
   async save(travel: Travel): Promise<void> {
     const db = await DatabaseConnection.getConnection();
     const id = travel.id || uuid();
-    
+
     await db.runAsync(
       'INSERT INTO travels (id, title, description, date, user_id, latitude, longitude, photo_url, sync_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
       id,
@@ -67,7 +67,7 @@ export class SQLiteTravelRepository implements ITravelRepository {
 
   async update(travel: Travel): Promise<void> {
     const db = await DatabaseConnection.getConnection();
-    
+
     await db.runAsync(
       "UPDATE travels SET title = ?, description = ?, date = ?, latitude = ?, longitude = ?, photo_url = ?, sync_status = CASE WHEN sync_status = 'synced' THEN 'pending_update' ELSE sync_status END WHERE id = ?",
       travel.title,
@@ -92,7 +92,12 @@ export class SQLiteTravelRepository implements ITravelRepository {
       row.title,
       row.description,
       new Date(row.date),
-      { id: row.user_id } as Partial<User>,
+      {
+        id: row.user.id,
+        name: { value: row.user.name },
+        email: row.user.email,
+      },
+      // { id: row.user_id } as Partial<User>,
       row.latitude && row.longitude ? GeoCoordinates.create(row.latitude, row.longitude) : undefined,
       row.photo_url ? Photo.create(row.photo_url) : undefined
     );

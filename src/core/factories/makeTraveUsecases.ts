@@ -11,10 +11,11 @@ import { SupabaseTravelRepository } from '../infra/repositories/supabaseTravelRe
 import {UploadFileUseCase} from "../domain/use-cases/UploadFile"
 import {DeleteFileUseCase} from "../domain/use-cases/DeleteFile"
 import {SupabaseStorageService} from "../infra/supabase/storage/storageService"
+import { HybridTravelRepository } from '../infra/repositories/HybridTravelRepository';
 
 export function makeTravelUseCases() {
   const travelRepository: ITravelRepository = process.env.EXPO_PUBLIC_USE_API
-    ? SupabaseTravelRepository.getInstance()
+     ? HybridTravelRepository.getInstance()
     : MockTravelRepository.getInstance();
 
   const registerTravel= new RegisterTravel(travelRepository);

@@ -104,7 +104,7 @@ export class SyncService {
             const travelUseCases = makeTravelUseCases();
             const uploadedPhotoUrl = await travelUseCases.uploadFile?.execute({
               imageAsset: photoUrl,
-              bucket: 'photos',
+              bucket: 'upload',
               userId: recordRow.user_id,
             });
             console.log(`Image uploaded. Remote URL: ${uploadedPhotoUrl}`);

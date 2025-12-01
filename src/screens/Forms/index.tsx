@@ -22,6 +22,7 @@ import { ButtonInterface } from "../../components/ButtonInterface";
 import { makeTravelUseCases } from "../../core/factories/makeTraveUsecases";
 import styles from "./styles";
 import { MeuTypes } from "../../navigations/MeuTabNavigation";
+import { useAuth } from "../../context/auth";
 
 export function FormsScreen({ navigation }: MeuTypes) {
 
@@ -38,6 +39,7 @@ export function FormsScreen({ navigation }: MeuTypes) {
   const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
 
   const travelUseCases = makeTravelUseCases();
+  const {user} = useAuth()
 
 
   useEffect(() => {
@@ -101,17 +103,18 @@ export function FormsScreen({ navigation }: MeuTypes) {
     setError(null);
 
     try {
-      const uploadedPhotoUrl = await travelUseCases.uploadFile.execute({
-        imageAsset,
-        bucket: 'upload',
-        userId: "1",
-      });
+      // const uploadedPhotoUrl = await travelUseCases.uploadFile.execute({
+      //   imageAsset,
+      //   bucket: 'upload',
+      //   userId: "1",
+      // });
+      const uploadedPhotoUrl = imageAsset?.uri
 
       await travelUseCases.registerTravel.execute({
         user: {
-          id: "1",
-          name: { value: userName || "Usuário Anônimo" },
-          email: { value: "teste@email.com" },
+          id: user?.id || "",
+          name: { value: user?.name.value || "Usuário Anônimo" },
+          email: { value: user?.email.value || ""},
           password: { value: "123456" },
           location: location,
         },
