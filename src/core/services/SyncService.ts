@@ -155,6 +155,7 @@ export class SyncService {
           const db = await DatabaseConnection.getConnection();
           await db.runAsync("DELETE FROM sync_log WHERE id = ?", logEntry.id);
         } catch (error) {
+          console.log(logEntry,"aqui")
           console.error(`Failed to process sync_log entry ${logEntry.id}:`, error);
         }
       }

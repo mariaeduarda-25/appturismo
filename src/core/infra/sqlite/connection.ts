@@ -3,7 +3,7 @@ import { migrations } from './migrations';
 
 class DatabaseConnection {
   private static instance: SQLite.SQLiteDatabase | null = null;
-  private static dbName: string = 'travel2.db';
+  private static dbName: string = 'travel4.db';
 
   static async getConnection(): Promise<SQLite.SQLiteDatabase> {
     if (!this.instance) {
